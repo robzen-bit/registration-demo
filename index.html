@@ -377,6 +377,133 @@
     }
     .btn-outline:hover { border-color: #888; }
 
+    /* ── Login modal ── */
+    .login-modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.45);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    .login-modal-overlay.open { display: flex; }
+
+    .login-modal {
+      background: #fff;
+      border-radius: 16px;
+      padding: 40px 36px 36px;
+      width: 100%;
+      max-width: 420px;
+      position: relative;
+      box-shadow: 0 8px 40px rgba(0,0,0,.18);
+      text-align: center;
+    }
+
+    .login-modal .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 20px;
+    }
+
+    .login-modal h2 {
+      font-size: 1.35rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .login-modal .login-sub {
+      font-size: .88rem;
+      color: #777;
+      margin-bottom: 24px;
+    }
+
+    .login-modal input[type="email"] {
+      width: 100%;
+      padding: 13px 14px;
+      border: 1.5px solid #d0d0d0;
+      border-radius: 8px;
+      font-size: .97rem;
+      color: #111;
+      outline: none;
+      margin-bottom: 16px;
+      transition: border-color .15s;
+    }
+    .login-modal input[type="email"]:focus { border-color: #555; }
+
+    .btn-enter {
+      width: 100%;
+      padding: 13px;
+      background: #222;
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      font-size: .97rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .15s;
+    }
+    .btn-enter:hover { background: #000; }
+
+    /* ── Access code modal ── */
+    .code-modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.45);
+      z-index: 110;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    .code-modal-overlay.open { display: flex; }
+
+    .code-modal {
+      background: #fff;
+      border-radius: 16px;
+      padding: 40px 36px 36px;
+      width: 100%;
+      max-width: 420px;
+      position: relative;
+      box-shadow: 0 8px 40px rgba(0,0,0,.18);
+      text-align: center;
+    }
+
+    .code-modal h2 {
+      font-size: 1.2rem;
+      font-weight: 800;
+      margin-bottom: 10px;
+      line-height: 1.35;
+    }
+
+    .code-modal .code-sub {
+      font-size: .88rem;
+      color: #777;
+      margin-bottom: 28px;
+    }
+
+    .code-inputs {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    .code-inputs input {
+      width: 48px;
+      height: 56px;
+      border: 1.5px solid #d0d0d0;
+      border-radius: 8px;
+      font-size: 1.4rem;
+      font-weight: 700;
+      text-align: center;
+      color: #111;
+      outline: none;
+      transition: border-color .15s;
+    }
+    .code-inputs input:focus { border-color: #555; }
+
     /* ── Toast ── */
     .toast {
       position: fixed;
@@ -475,7 +602,7 @@
       <p class="payment-heading">Heads up</p>
       <p class="payment-message" id="payment-message"></p>
       <div class="payment-btns">
-        <button class="btn-payment">Sign in with a different account</button>
+        <button class="btn-payment" id="btn-sign-in-different">Sign in with a different account</button>
         <button class="btn-payment">Pay and register with my account</button>
       </div>
     </div>
@@ -502,6 +629,35 @@
       </div>
 
       <button class="btn-outline" id="btn-go-back">Go back and edit</button>
+    </div>
+  </div>
+
+  <!-- Login modal -->
+  <div class="login-modal-overlay" id="login-modal-overlay">
+    <div class="login-modal">
+      <button class="modal-close" id="login-modal-close">✕</button>
+      <h2>Sign in to your account</h2>
+      <p class="login-sub">Enter the email address associated with your account.</p>
+      <input type="email" id="login-email" placeholder="Email" autocomplete="email" />
+      <button class="btn-enter" id="btn-enter">Enter</button>
+    </div>
+  </div>
+
+  <!-- Access code modal -->
+  <div class="code-modal-overlay" id="code-modal-overlay">
+    <div class="code-modal">
+      <button class="modal-close" id="code-modal-close">✕</button>
+      <h2>We have sent an access code to your email</h2>
+      <p class="code-sub">Please enter it below to access the gallery.</p>
+      <div class="code-inputs">
+        <input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]" />
+        <input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]" />
+        <input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]" />
+        <input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]" />
+        <input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]" />
+        <input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]" />
+      </div>
+      <button class="btn-enter" id="btn-verify-code">Verify</button>
     </div>
   </div>
 
@@ -603,12 +759,70 @@
       closeModal();
     });
 
-    // X closes modal
+    // X closes mismatch modal
     document.getElementById('modal-close').addEventListener('click', closeModal);
-
-    // Click outside modal closes it
     modalOverlay.addEventListener('click', function(e) {
       if (e.target === modalOverlay) closeModal();
+    });
+
+    // ── Login modal ──
+    const loginOverlay = document.getElementById('login-modal-overlay');
+    const loginEmailInput = document.getElementById('login-email');
+
+    function openLoginModal() {
+      loginEmailInput.value = 'james.harper@email.com';
+      loginOverlay.classList.add('open');
+    }
+
+    function closeLoginModal() {
+      loginOverlay.classList.remove('open');
+    }
+
+    document.getElementById('login-modal-close').addEventListener('click', closeLoginModal);
+    loginOverlay.addEventListener('click', function(e) {
+      if (e.target === loginOverlay) closeLoginModal();
+    });
+
+    // Sign in with a different account → toast + login modal
+    document.getElementById('btn-sign-in-different').addEventListener('click', function() {
+      showToast(`Logged out of ${LOGGED_IN_EMAIL}`);
+      openLoginModal();
+    });
+
+    // Enter → close login modal, open access code modal
+    document.getElementById('btn-enter').addEventListener('click', function() {
+      closeLoginModal();
+      openCodeModal();
+    });
+
+    // ── Access code modal ──
+    const codeOverlay = document.getElementById('code-modal-overlay');
+    const codeBoxes = Array.from(document.querySelectorAll('.code-inputs input'));
+
+    function openCodeModal() {
+      codeBoxes.forEach(b => b.value = '');
+      codeOverlay.classList.add('open');
+      codeBoxes[0].focus();
+    }
+
+    function closeCodeModal() {
+      codeOverlay.classList.remove('open');
+    }
+
+    document.getElementById('code-modal-close').addEventListener('click', closeCodeModal);
+    codeOverlay.addEventListener('click', function(e) {
+      if (e.target === codeOverlay) closeCodeModal();
+    });
+
+    // Auto-advance focus between code boxes
+    codeBoxes.forEach(function(box, i) {
+      box.addEventListener('input', function() {
+        box.value = box.value.replace(/\D/g, '').slice(-1);
+        if (box.value && i < codeBoxes.length - 1) codeBoxes[i + 1].focus();
+      });
+      box.addEventListener('keydown', function(e) {
+        if (e.key === 'Backspace' && !box.value && i > 0) codeBoxes[i - 1].focus();
+      });
     });
 
     showScreen('form');
