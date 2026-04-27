@@ -938,9 +938,8 @@
     const codeBoxes = Array.from(document.querySelectorAll('.code-inputs input'));
 
     function openCodeModal() {
-      codeBoxes.forEach(b => b.value = '');
+      ['4','8','2','1','9','3'].forEach((d, i) => codeBoxes[i].value = d);
       codeOverlay.classList.add('open');
-      codeBoxes[0].focus();
     }
 
     function closeCodeModal() {
