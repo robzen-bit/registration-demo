@@ -49,6 +49,19 @@
 
     .account-btn svg { width: 30px; height: 30px; }
 
+    .reset-btn {
+      background: none;
+      border: 1.5px solid #d0d0d0;
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: .8rem;
+      font-weight: 600;
+      color: #888;
+      cursor: pointer;
+      transition: border-color .15s, color .15s;
+    }
+    .reset-btn:hover { border-color: #999; color: #444; }
+
     /* ── Page centre ── */
     main {
       flex: 1;
@@ -386,6 +399,7 @@
 <body>
 
   <header>
+    <button class="reset-btn" id="reset-btn" title="Reset demo">↺ Reset</button>
     <div class="header-account">
       <span class="header-email" id="header-email">james.harper.account@email.com</span>
       <button class="account-btn" title="Account">
@@ -498,6 +512,18 @@
     const modalBody    = document.getElementById('modal-body');
     const switchSubLabel = document.getElementById('switch-sub-label');
     const toast        = document.getElementById('toast');
+
+    function resetAll() {
+      closeModal();
+      showScreen('form');
+      fillForm({ firstName: 'James', lastName: 'Harper', email: 'james.harper@email.com', mobile: '07700 900123' });
+      const headerEmail = document.getElementById('header-email');
+      headerEmail.textContent = LOGGED_IN_EMAIL;
+      headerEmail.style.fontWeight = '';
+      headerEmail.style.color = '';
+    }
+
+    document.getElementById('reset-btn').addEventListener('click', resetAll);
 
     function showScreen(name) {
       formScreen.style.display    = name === 'form'    ? 'flex' : 'none';
