@@ -637,6 +637,75 @@
       opacity: 1;
       transform: translateY(0);
     }
+
+    /* ── Thanks screen ── */
+    #thanks-screen {
+      display: none;
+      flex: 1;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .thanks-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 24px 32px;
+      text-align: center;
+    }
+
+    .thanks-title {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #5bb8b8;
+      margin-bottom: 60px;
+    }
+
+    .thanks-label {
+      font-size: .85rem;
+      font-weight: 700;
+      color: #5bb8b8;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .thanks-message {
+      font-size: 1.05rem;
+      color: #5bb8b8;
+      line-height: 1.55;
+      margin-bottom: 56px;
+    }
+
+    .btn-go-gallery {
+      padding: 16px 40px;
+      border: 1.5px solid #8fbc6e;
+      border-radius: 50px;
+      background: #fff;
+      color: #7a9e5a;
+      font-size: .85rem;
+      font-weight: 600;
+      cursor: pointer;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      transition: background .15s;
+    }
+    .btn-go-gallery:hover { background: #f4f9ef; }
+
+    .thanks-footer {
+      width: 100%;
+      text-align: center;
+      padding: 20px;
+      font-size: .88rem;
+      color: #555;
+      font-weight: 600;
+      border-top: 1px solid #eee;
+    }
+    .thanks-footer a { color: #555; text-decoration: none; }
+    .thanks-footer a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
@@ -792,6 +861,19 @@
     <div class="gallery-grid" id="gallery-grid"></div>
   </main>
 
+  <!-- Thanks / payment confirmed screen -->
+  <main id="thanks-screen">
+    <div class="thanks-body">
+      <div class="thanks-title">Portraits</div>
+      <p class="thanks-label">Thanks</p>
+      <p class="thanks-message">We're pleased to confirm that we<br>have received your payment.</p>
+      <button class="btn-go-gallery" id="btn-go-gallery">Go to Gallery</button>
+    </div>
+    <div class="thanks-footer">
+      <a href="#">Terms of Service</a> · <a href="#">Privacy Policy</a>
+    </div>
+  </main>
+
   <!-- Toast -->
   <div class="toast" id="toast"></div>
 
@@ -801,6 +883,7 @@
     const formScreen    = document.getElementById('form-screen');
     const paymentScreen = document.getElementById('payment-screen');
     const galleryScreen = document.getElementById('gallery-screen');
+    const thanksScreen  = document.getElementById('thanks-screen');
     const modalOverlay = document.getElementById('modal-overlay');
     const modalBody    = document.getElementById('modal-body');
     const switchSubLabel = document.getElementById('switch-sub-label');
@@ -833,6 +916,7 @@
       formScreen.style.display    = name === 'form'    ? 'flex' : 'none';
       paymentScreen.style.display = name === 'payment' ? 'flex' : 'none';
       galleryScreen.style.display = name === 'gallery' ? 'flex' : 'none';
+      thanksScreen.style.display  = name === 'thanks'  ? 'flex' : 'none';
     }
 
     function openModal(formEmail) {
@@ -868,11 +952,28 @@
       };
     }
 
-    // Submit
+    // Submit — go straight to thanks if email matches logged-in account
     document.getElementById('reg-form').addEventListener('submit', function(e) {
       e.preventDefault();
       const data = readForm();
-      openModal(data.email);
+      if (data.email.trim().toLowerCase() === LOGGED_IN_EMAIL.toLowerCase()) {
+        showScreen('thanks');
+      } else {
+        openModal(data.email);
+      }
+    });
+
+    // Go to Gallery from thanks screen
+    document.getElementById('btn-go-gallery').addEventListener('click', function() {
+      showScreen('gallery');
+    });
+
+    // Pay and register with my account → back to form with account email
+    document.querySelector('#payment-screen .btn-payment:last-child').addEventListener('click', function() {
+      const savedData = readForm();
+      savedData.email = LOGGED_IN_EMAIL;
+      showScreen('form');
+      fillForm(savedData);
     });
 
     // Register for someone else → payment screen
