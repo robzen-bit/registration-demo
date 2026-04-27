@@ -44,45 +44,45 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 40px 16px;
+      padding: 20px 16px;
     }
 
     .card {
       background: #fff;
       border-radius: 14px;
       box-shadow: 0 2px 16px rgba(0,0,0,.08);
-      padding: 48px 40px 40px;
+      padding: 28px 32px 28px;
       width: 100%;
-      max-width: 620px;
+      max-width: 560px;
     }
 
     h1 {
       text-align: center;
-      font-size: 2rem;
+      font-size: 1.6rem;
       font-weight: 800;
-      margin-bottom: 12px;
+      margin-bottom: 6px;
     }
 
     .subtitle {
       text-align: center;
-      font-size: 1.05rem;
+      font-size: .92rem;
       color: #222;
-      margin-bottom: 32px;
+      margin-bottom: 20px;
     }
 
     /* ── Form ── */
-    .row { display: flex; gap: 12px; margin-bottom: 14px; }
+    .row { display: flex; gap: 10px; margin-bottom: 10px; }
     .row .field { flex: 1; }
-    .field { margin-bottom: 14px; }
+    .field { margin-bottom: 10px; }
 
     input[type="text"],
     input[type="email"],
     input[type="tel"] {
       width: 100%;
-      padding: 16px 14px;
+      padding: 11px 12px;
       border: 1.5px solid #d0d0d0;
       border-radius: 8px;
-      font-size: 1rem;
+      font-size: .93rem;
       color: #111;
       outline: none;
       transition: border-color .15s;
@@ -96,33 +96,33 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     .country-select {
       display: flex;
       align-items: center;
       gap: 6px;
-      padding: 14px 10px;
+      padding: 11px 10px;
       border: 1.5px solid #d0d0d0;
       border-radius: 8px;
       background: #fff;
       cursor: pointer;
       white-space: nowrap;
-      font-size: .95rem;
+      font-size: .93rem;
       color: #333;
       flex-shrink: 0;
     }
 
-    .country-select .flag { font-size: 1.3rem; }
+    .country-select .flag { font-size: 1.2rem; }
     .country-select .chevron { font-size: .7rem; color: #666; }
     .phone-row input[type="tel"] { flex: 1; }
 
     .sms-note {
-      font-size: .73rem;
+      font-size: .68rem;
       color: #777;
       line-height: 1.5;
-      margin-bottom: 24px;
+      margin-bottom: 16px;
     }
     .sms-note a { color: #777; }
 
@@ -130,25 +130,25 @@
     .fee-box {
       background: #f0f0f0;
       border-radius: 10px;
-      padding: 28px 20px;
+      padding: 18px 16px;
       text-align: center;
-      margin-bottom: 28px;
+      margin-bottom: 18px;
     }
-    .fee-box .fee-title { font-size: 1.15rem; color: #444; margin-bottom: 14px; }
-    .fee-box .fee-desc { font-size: 1rem; color: #333; line-height: 1.55; margin-bottom: 18px; }
-    .fee-box .already-paid { font-size: 1rem; color: #222; }
+    .fee-box .fee-title { font-size: 1rem; color: #444; margin-bottom: 8px; }
+    .fee-box .fee-desc { font-size: .88rem; color: #333; line-height: 1.5; margin-bottom: 12px; }
+    .fee-box .already-paid { font-size: .88rem; color: #222; }
     .fee-box .already-paid a { color: #111; font-weight: 700; text-decoration: underline; }
 
     /* ── Submit ── */
     .submit-btn {
       display: block;
       width: 100%;
-      padding: 16px;
+      padding: 13px;
       background: #222;
       color: #fff;
       border: none;
       border-radius: 50px;
-      font-size: 1.05rem;
+      font-size: .97rem;
       font-weight: 600;
       cursor: pointer;
       transition: background .2s, color .2s;
@@ -270,14 +270,14 @@
     /* ── Toast ── */
     .toast {
       position: fixed;
-      bottom: 32px;
-      left: 50%;
-      transform: translateX(-50%) translateY(80px);
+      top: 20px;
+      right: 24px;
+      transform: translateY(-12px);
       background: #111;
       color: #fff;
-      padding: 14px 24px;
-      border-radius: 50px;
-      font-size: .95rem;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: .9rem;
       font-weight: 500;
       white-space: nowrap;
       opacity: 0;
@@ -287,7 +287,7 @@
     }
     .toast.show {
       opacity: 1;
-      transform: translateX(-50%) translateY(0);
+      transform: translateY(0);
     }
   </style>
 </head>
