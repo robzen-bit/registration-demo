@@ -459,6 +459,61 @@
     }
     .code-modal-overlay.open { display: flex; }
 
+    .code-modal-overlay.open { flex-direction: column; gap: 12px; }
+
+    .system-note {
+      background: #1e1e2e;
+      color: #c8d0f0;
+      border: 1px solid #3a3a5c;
+      border-radius: 10px;
+      padding: 12px 16px;
+      max-width: 420px;
+      width: 100%;
+      font-size: .78rem;
+      font-family: "SF Mono", "Fira Code", "Consolas", monospace;
+      line-height: 1.55;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .system-note .note-badge {
+      background: #4a4a7a;
+      color: #a0a8d8;
+      font-size: .65rem;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px;
+      white-space: nowrap;
+      letter-spacing: .05em;
+      margin-top: 1px;
+      flex-shrink: 0;
+    }
+
+    .system-note-arrow {
+      width: 0;
+      height: 0;
+      border-left: 9px solid transparent;
+      border-right: 9px solid transparent;
+      border-top: 9px solid #3a3a5c;
+      align-self: center;
+      margin: -4px auto 0;
+      display: block;
+      position: relative;
+    }
+
+    .system-note-arrow::after {
+      content: '';
+      position: absolute;
+      top: -10px;
+      left: -8px;
+      width: 0;
+      height: 0;
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+      border-top: 8px solid #1e1e2e;
+    }
+
     .code-modal {
       background: #fff;
       border-radius: 16px;
@@ -701,6 +756,11 @@
 
   <!-- Access code modal -->
   <div class="code-modal-overlay" id="code-modal-overlay">
+    <div class="system-note">
+      <span class="note-badge">SYSTEM</span>
+      <span>Client enters log in flow and can use their password if they have one, or request an access code.</span>
+    </div>
+    <span class="system-note-arrow"></span>
     <div class="code-modal">
       <button class="modal-close" id="code-modal-close">✕</button>
       <h2>We have sent an access code to your email</h2>
