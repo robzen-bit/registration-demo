@@ -504,6 +504,62 @@
     }
     .code-inputs input:focus { border-color: #555; }
 
+    /* ── Gallery screen ── */
+    #gallery-screen {
+      display: none;
+      flex: 1;
+      flex-direction: column;
+    }
+
+    .gallery-hero {
+      background: #1a1a1a;
+      color: #fff;
+      padding: 40px 32px 28px;
+      text-align: center;
+    }
+
+    .gallery-hero h2 {
+      font-size: 1.6rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+    .gallery-hero p {
+      font-size: .9rem;
+      color: #aaa;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4px;
+      padding: 4px;
+      flex: 1;
+      background: #eee;
+    }
+
+    .gallery-item {
+      aspect-ratio: 1;
+      background: #ccc;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .gallery-item:nth-child(odd)  { background: #b8c4c4; }
+    .gallery-item:nth-child(even) { background: #c8d4d4; }
+    .gallery-item:nth-child(3n)   { background: #a8bcbc; }
+
+    .gallery-item .img-label {
+      position: absolute;
+      bottom: 8px;
+      left: 8px;
+      font-size: .7rem;
+      color: rgba(255,255,255,.7);
+      font-weight: 600;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
     /* ── Toast ── */
     .toast {
       position: fixed;
@@ -661,14 +717,24 @@
     </div>
   </div>
 
+  <!-- Gallery screen -->
+  <main id="gallery-screen">
+    <div class="gallery-hero">
+      <h2>Jersey Numbers — Portraits</h2>
+      <p>James Harper · james.harper@email.com</p>
+    </div>
+    <div class="gallery-grid" id="gallery-grid"></div>
+  </main>
+
   <!-- Toast -->
   <div class="toast" id="toast"></div>
 
   <script>
     const LOGGED_IN_EMAIL = 'james.harper.account@email.com';
 
-    const formScreen   = document.getElementById('form-screen');
+    const formScreen    = document.getElementById('form-screen');
     const paymentScreen = document.getElementById('payment-screen');
+    const galleryScreen = document.getElementById('gallery-screen');
     const modalOverlay = document.getElementById('modal-overlay');
     const modalBody    = document.getElementById('modal-body');
     const switchSubLabel = document.getElementById('switch-sub-label');
@@ -686,9 +752,21 @@
 
     document.getElementById('reset-btn').addEventListener('click', resetAll);
 
+    // Build fake gallery tiles once
+    (function() {
+      const grid = document.getElementById('gallery-grid');
+      for (let i = 1; i <= 12; i++) {
+        const div = document.createElement('div');
+        div.className = 'gallery-item';
+        div.innerHTML = `<span class="img-label">IMG_${String(i).padStart(4,'0')}</span>`;
+        grid.appendChild(div);
+      }
+    })();
+
     function showScreen(name) {
       formScreen.style.display    = name === 'form'    ? 'flex' : 'none';
       paymentScreen.style.display = name === 'payment' ? 'flex' : 'none';
+      galleryScreen.style.display = name === 'gallery' ? 'flex' : 'none';
     }
 
     function openModal(formEmail) {
@@ -814,11 +892,16 @@
       if (e.target === codeOverlay) closeCodeModal();
     });
 
-    // Auto-advance focus between code boxes
+    // Auto-advance focus; show gallery as soon as any digit is entered
     codeBoxes.forEach(function(box, i) {
       box.addEventListener('input', function() {
         box.value = box.value.replace(/\D/g, '').slice(-1);
-        if (box.value && i < codeBoxes.length - 1) codeBoxes[i + 1].focus();
+        if (box.value) {
+          closeCodeModal();
+          showScreen('gallery');
+          return;
+        }
+        if (i < codeBoxes.length - 1) codeBoxes[i + 1].focus();
       });
       box.addEventListener('keydown', function(e) {
         if (e.key === 'Backspace' && !box.value && i > 0) codeBoxes[i - 1].focus();
