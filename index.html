@@ -879,6 +879,7 @@
 
   <script>
     const LOGGED_IN_EMAIL = 'james.harper.account@email.com';
+    let switchedAccount = false;
 
     const formScreen    = document.getElementById('form-screen');
     const paymentScreen = document.getElementById('payment-screen');
@@ -891,6 +892,7 @@
 
     function resetAll() {
       closeModal();
+      switchedAccount = false;
       showScreen('form');
       fillForm({ firstName: 'James', lastName: 'Harper', email: 'james.harper@email.com', mobile: '07700 900123' });
       const headerEmail = document.getElementById('header-email');
@@ -956,7 +958,7 @@
     document.getElementById('reg-form').addEventListener('submit', function(e) {
       e.preventDefault();
       const data = readForm();
-      if (data.email.trim().toLowerCase() === LOGGED_IN_EMAIL.toLowerCase()) {
+      if (switchedAccount || data.email.trim().toLowerCase() === LOGGED_IN_EMAIL.toLowerCase()) {
         showScreen('thanks');
       } else {
         openModal(data.email);
@@ -990,6 +992,7 @@
     document.getElementById('btn-switch-email').addEventListener('click', function() {
       const savedData = readForm();
       closeModal();
+      switchedAccount = true;
       showToast(`Logged out of ${LOGGED_IN_EMAIL}`);
       const headerEmail = document.getElementById('header-email');
       headerEmail.textContent = 'Log In';
