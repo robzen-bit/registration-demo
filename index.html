@@ -36,10 +36,7 @@
       font-size: 14px;
     }
 
-    .account-btn svg {
-      width: 30px;
-      height: 30px;
-    }
+    .account-btn svg { width: 30px; height: 30px; }
 
     /* ── Page centre ── */
     main {
@@ -74,17 +71,9 @@
     }
 
     /* ── Form ── */
-    .row {
-      display: flex;
-      gap: 12px;
-      margin-bottom: 14px;
-    }
-
+    .row { display: flex; gap: 12px; margin-bottom: 14px; }
     .row .field { flex: 1; }
-
-    .field {
-      margin-bottom: 14px;
-    }
+    .field { margin-bottom: 14px; }
 
     input[type="text"],
     input[type="email"],
@@ -100,7 +89,6 @@
     }
 
     input::placeholder { color: #aaa; }
-
     input:focus { border-color: #555; }
 
     /* ── Phone row ── */
@@ -127,9 +115,7 @@
     }
 
     .country-select .flag { font-size: 1.3rem; }
-
     .country-select .chevron { font-size: .7rem; color: #666; }
-
     .phone-row input[type="tel"] { flex: 1; }
 
     .sms-note {
@@ -138,7 +124,6 @@
       line-height: 1.5;
       margin-bottom: 24px;
     }
-
     .sms-note a { color: #777; }
 
     /* ── Fee box ── */
@@ -149,50 +134,160 @@
       text-align: center;
       margin-bottom: 28px;
     }
-
-    .fee-box .fee-title {
-      font-size: 1.15rem;
-      color: #444;
-      margin-bottom: 14px;
-    }
-
-    .fee-box .fee-desc {
-      font-size: 1rem;
-      color: #333;
-      line-height: 1.55;
-      margin-bottom: 18px;
-    }
-
-    .fee-box .already-paid {
-      font-size: 1rem;
-      color: #222;
-    }
-
-    .fee-box .already-paid a {
-      color: #111;
-      font-weight: 700;
-      text-decoration: underline;
-    }
+    .fee-box .fee-title { font-size: 1.15rem; color: #444; margin-bottom: 14px; }
+    .fee-box .fee-desc { font-size: 1rem; color: #333; line-height: 1.55; margin-bottom: 18px; }
+    .fee-box .already-paid { font-size: 1rem; color: #222; }
+    .fee-box .already-paid a { color: #111; font-weight: 700; text-decoration: underline; }
 
     /* ── Submit ── */
     .submit-btn {
       display: block;
       width: 100%;
       padding: 16px;
-      background: #e8e8e8;
-      color: #999;
+      background: #222;
+      color: #fff;
       border: none;
       border-radius: 50px;
       font-size: 1.05rem;
       font-weight: 600;
-      cursor: not-allowed;
+      cursor: pointer;
       transition: background .2s, color .2s;
     }
+    .submit-btn:hover { background: #000; }
 
-    .submit-btn.active {
-      background: #222;
-      color: #fff;
+    /* ── Payment screen ── */
+    #payment-screen {
+      display: none;
+      flex: 1;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 16px;
+    }
+
+    /* ── Modal overlay ── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.45);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    .modal-overlay.open { display: flex; }
+
+    .modal {
+      background: #fff;
+      border-radius: 16px;
+      padding: 48px 40px 40px;
+      width: 100%;
+      max-width: 760px;
+      position: relative;
+      box-shadow: 0 8px 40px rgba(0,0,0,.18);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 20px;
+      background: none;
+      border: none;
+      font-size: 1.4rem;
+      color: #aaa;
       cursor: pointer;
+      line-height: 1;
+    }
+    .modal-close:hover { color: #555; }
+
+    .modal h2 {
+      font-size: 1.65rem;
+      font-weight: 800;
+      text-align: center;
+      margin-bottom: 28px;
+      line-height: 1.25;
+    }
+
+    .modal-body {
+      text-align: center;
+      font-size: 1.05rem;
+      color: #333;
+      line-height: 1.6;
+      margin-bottom: 36px;
+    }
+    .modal-body strong { color: #111; font-weight: 700; }
+
+    .modal-actions {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .modal-actions .btn-dark {
+      flex: 1;
+      padding: 18px 16px;
+      background: #1a1a1a;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .15s;
+    }
+    .modal-actions .btn-dark:hover { background: #000; }
+
+    .modal-sub {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .modal-sub .sub-label {
+      flex: 1;
+      text-align: center;
+      font-size: .88rem;
+      color: #aaa;
+      line-height: 1.4;
+    }
+
+    .btn-outline {
+      display: block;
+      width: 100%;
+      max-width: 280px;
+      margin: 0 auto;
+      padding: 16px;
+      background: #fff;
+      color: #111;
+      border: 1.5px solid #ccc;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: border-color .15s;
+    }
+    .btn-outline:hover { border-color: #888; }
+
+    /* ── Toast ── */
+    .toast {
+      position: fixed;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: #111;
+      color: #fff;
+      padding: 14px 24px;
+      border-radius: 50px;
+      font-size: .95rem;
+      font-weight: 500;
+      white-space: nowrap;
+      opacity: 0;
+      transition: opacity .3s, transform .3s;
+      z-index: 200;
+      pointer-events: none;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
     }
   </style>
 </head>
@@ -208,7 +303,8 @@
     </button>
   </header>
 
-  <main>
+  <!-- Registration form -->
+  <main id="form-screen">
     <div class="card">
       <h1>Jersey Numbers</h1>
       <p class="subtitle">Please fill out the form below to complete registration.</p>
@@ -216,15 +312,15 @@
       <form id="reg-form" novalidate>
         <div class="row">
           <div class="field">
-            <input type="text" id="first-name" placeholder="First Name" autocomplete="given-name" />
+            <input type="text" id="first-name" placeholder="First Name" autocomplete="given-name" value="James" />
           </div>
           <div class="field">
-            <input type="text" id="last-name" placeholder="Last Name" autocomplete="family-name" />
+            <input type="text" id="last-name" placeholder="Last Name" autocomplete="family-name" value="Harper" />
           </div>
         </div>
 
         <div class="field">
-          <input type="email" id="email" placeholder="Email*" autocomplete="email" required />
+          <input type="email" id="email" placeholder="Email*" autocomplete="email" required value="james.harper@email.com" />
         </div>
 
         <div class="phone-row">
@@ -232,7 +328,7 @@
             <span class="flag">🇬🇧</span>
             <span class="chevron">▾</span>
           </div>
-          <input type="tel" id="mobile" placeholder="Mobile (optional)" autocomplete="tel" />
+          <input type="tel" id="mobile" placeholder="Mobile (optional)" autocomplete="tel" value="07700 900123" />
         </div>
 
         <p class="sms-note">
@@ -257,22 +353,123 @@
     </div>
   </main>
 
-  <script>
-    const emailInput = document.getElementById('email');
-    const submitBtn = document.getElementById('submit-btn');
+  <!-- Payment confirmed (placeholder) -->
+  <main id="payment-screen">
+    <div class="card" style="text-align:center; padding: 64px 40px;">
+      <h1 style="margin-bottom:16px;">Payment Confirmed</h1>
+      <p style="color:#555; font-size:1.05rem;">Your registration is complete.</p>
+    </div>
+  </main>
 
-    function updateBtn() {
-      if (emailInput.value.trim()) {
-        submitBtn.classList.add('active');
-        submitBtn.removeAttribute('disabled');
-      } else {
-        submitBtn.classList.remove('active');
-        submitBtn.setAttribute('disabled', '');
-      }
+  <!-- Email mismatch modal -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal">
+      <button class="modal-close" id="modal-close">✕</button>
+      <h2>Heads up — email doesn't match your account</h2>
+      <p class="modal-body" id="modal-body"></p>
+
+      <div class="modal-actions">
+        <button class="btn-dark" id="btn-register-other">Register for someone else</button>
+        <button class="btn-dark" id="btn-switch-email">Switch to this email</button>
+      </div>
+
+      <div class="modal-sub">
+        <span class="sub-label">Continue as-is and stay logged in</span>
+        <span class="sub-label" id="switch-sub-label"></span>
+      </div>
+
+      <button class="btn-outline" id="btn-go-back">Go back and edit</button>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const LOGGED_IN_EMAIL = 'james.harper.account@email.com';
+
+    const formScreen   = document.getElementById('form-screen');
+    const paymentScreen = document.getElementById('payment-screen');
+    const modalOverlay = document.getElementById('modal-overlay');
+    const modalBody    = document.getElementById('modal-body');
+    const switchSubLabel = document.getElementById('switch-sub-label');
+    const toast        = document.getElementById('toast');
+
+    function showScreen(name) {
+      formScreen.style.display    = name === 'form'    ? 'flex' : 'none';
+      paymentScreen.style.display = name === 'payment' ? 'flex' : 'none';
     }
 
-    emailInput.addEventListener('input', updateBtn);
-    updateBtn();
+    function openModal(formEmail) {
+      modalBody.innerHTML =
+        `You're logged in as <strong>${LOGGED_IN_EMAIL}</strong>, but you're registering with <strong>${formEmail}</strong>.`;
+      switchSubLabel.textContent = `Log out of your account and register with ${formEmail}`;
+      modalOverlay.classList.add('open');
+    }
+
+    function closeModal() {
+      modalOverlay.classList.remove('open');
+    }
+
+    function showToast(msg) {
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    function fillForm(data) {
+      document.getElementById('first-name').value = data.firstName;
+      document.getElementById('last-name').value  = data.lastName;
+      document.getElementById('email').value      = data.email;
+      document.getElementById('mobile').value     = data.mobile;
+    }
+
+    function readForm() {
+      return {
+        firstName: document.getElementById('first-name').value,
+        lastName:  document.getElementById('last-name').value,
+        email:     document.getElementById('email').value,
+        mobile:    document.getElementById('mobile').value,
+      };
+    }
+
+    // Submit
+    document.getElementById('reg-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const data = readForm();
+      openModal(data.email);
+    });
+
+    // Register for someone else → payment screen
+    document.getElementById('btn-register-other').addEventListener('click', function() {
+      closeModal();
+      showScreen('payment');
+    });
+
+    // Switch to this email → toast + back to form with form email kept, logged-in email replaced
+    document.getElementById('btn-switch-email').addEventListener('click', function() {
+      const formEmail = document.getElementById('email').value;
+      const savedData = readForm();
+      closeModal();
+      showToast(`Logged out of ${LOGGED_IN_EMAIL}`);
+      showScreen('form');
+      fillForm(savedData);
+    });
+
+    // Go back and edit → close modal, form data stays
+    document.getElementById('btn-go-back').addEventListener('click', function() {
+      closeModal();
+    });
+
+    // X closes modal
+    document.getElementById('modal-close').addEventListener('click', closeModal);
+
+    // Click outside modal closes it
+    modalOverlay.addEventListener('click', function(e) {
+      if (e.target === modalOverlay) closeModal();
+    });
+
+    showScreen('form');
   </script>
 </body>
 </html>
