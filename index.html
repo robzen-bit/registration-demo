@@ -235,6 +235,40 @@
 
     .payment-message strong { font-weight: 700; }
 
+    .payment-name-fields {
+      display: flex;
+      gap: 10px;
+      width: 100%;
+      max-width: 360px;
+      margin-bottom: 20px;
+    }
+
+    .payment-name-fields input {
+      flex: 1;
+      padding: 11px 12px;
+      border: 1.5px solid #d0d0d0;
+      border-radius: 8px;
+      font-size: .93rem;
+      color: #111;
+      outline: none;
+      transition: border-color .15s;
+      background: #fff;
+    }
+    .payment-name-fields input::placeholder { color: #aaa; }
+    .payment-name-fields input:focus { border-color: #555; }
+
+    .payment-name-label {
+      font-size: .78rem;
+      font-weight: 600;
+      color: #5bb8b8;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      margin-bottom: 10px;
+      width: 100%;
+      max-width: 360px;
+      text-align: left;
+    }
+
     .payment-btns {
       display: flex;
       flex-direction: column;
@@ -781,6 +815,11 @@
       <div class="payment-warning-icon">⚠️</div>
       <p class="payment-heading">Heads up</p>
       <p class="payment-message" id="payment-message"></p>
+      <p class="payment-name-label" id="payment-name-label" style="display:none">Registering for</p>
+      <div class="payment-name-fields" id="payment-name-fields" style="display:none">
+        <input type="text" id="payment-first-name" placeholder="First Name" autocomplete="given-name" />
+        <input type="text" id="payment-last-name" placeholder="Last Name" autocomplete="family-name" />
+      </div>
       <div class="payment-btns">
         <button class="btn-payment" id="btn-sign-in-different">Sign in with a different account</button>
         <button class="btn-payment">Pay and register with my account</button>
@@ -984,6 +1023,10 @@
       document.getElementById('payment-message').innerHTML =
         `This gallery was registered to <strong>${formEmail}</strong>, not the account you're logged in with.<br><br>` +
         `To view this gallery, you'll need to sign in as <strong>${formEmail}</strong>. Or, if you'd like to access it with your current account, you can register and pay again using <strong>${LOGGED_IN_EMAIL}</strong>.`;
+      document.getElementById('payment-first-name').value = document.getElementById('first-name').value;
+      document.getElementById('payment-last-name').value  = document.getElementById('last-name').value;
+      document.getElementById('payment-name-label').style.display  = '';
+      document.getElementById('payment-name-fields').style.display = '';
       closeModal();
       showScreen('payment');
     });
