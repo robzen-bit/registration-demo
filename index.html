@@ -815,11 +815,6 @@
       <div class="payment-warning-icon">⚠️</div>
       <p class="payment-heading">Heads up</p>
       <p class="payment-message" id="payment-message"></p>
-      <p class="payment-name-label" id="payment-name-label" style="display:none">Registering for</p>
-      <div class="payment-name-fields" id="payment-name-fields" style="display:none">
-        <input type="text" id="payment-first-name" placeholder="First Name" autocomplete="given-name" />
-        <input type="text" id="payment-last-name" placeholder="Last Name" autocomplete="family-name" />
-      </div>
       <div class="payment-btns">
         <button class="btn-payment" id="btn-sign-in-different">Sign in with a different account</button>
         <button class="btn-payment">Pay and register with my account</button>
@@ -848,6 +843,28 @@
       </div>
 
       <button class="btn-outline" id="btn-go-back">Go back and edit</button>
+    </div>
+  </div>
+
+  <!-- Register for someone else modal -->
+  <div class="modal-overlay" id="register-other-overlay">
+    <div class="modal">
+      <button class="modal-close" id="register-other-close">✕</button>
+      <h2>Registering for someone else</h2>
+      <p class="modal-body">Enter the details for the person you are registering for below.</p>
+
+      <div class="row" style="margin-bottom: 20px;">
+        <div class="field">
+          <input type="text" id="reg-other-first" placeholder="First Name" autocomplete="given-name" />
+        </div>
+        <div class="field">
+          <input type="text" id="reg-other-last" placeholder="Last Name (optional)" autocomplete="family-name" />
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn-dark" id="btn-reg-other-confirm">Continue to payment</button>
+      </div>
     </div>
   </div>
 
@@ -1017,17 +1034,36 @@
       fillForm(savedData);
     });
 
-    // Register for someone else → payment screen
+    // Register for someone else → open name-capture modal
+    const registerOtherOverlay = document.getElementById('register-other-overlay');
+
+    function openRegisterOtherModal() {
+      document.getElementById('reg-other-first').value = document.getElementById('first-name').value;
+      document.getElementById('reg-other-last').value  = document.getElementById('last-name').value;
+      registerOtherOverlay.classList.add('open');
+    }
+
+    function closeRegisterOtherModal() {
+      registerOtherOverlay.classList.remove('open');
+    }
+
     document.getElementById('btn-register-other').addEventListener('click', function() {
+      closeModal();
+      openRegisterOtherModal();
+    });
+
+    document.getElementById('register-other-close').addEventListener('click', closeRegisterOtherModal);
+    registerOtherOverlay.addEventListener('click', function(e) {
+      if (e.target === registerOtherOverlay) closeRegisterOtherModal();
+    });
+
+    // Continue to payment from register-other modal
+    document.getElementById('btn-reg-other-confirm').addEventListener('click', function() {
       const formEmail = document.getElementById('email').value;
       document.getElementById('payment-message').innerHTML =
         `This gallery was registered to <strong>${formEmail}</strong>, not the account you're logged in with.<br><br>` +
         `To view this gallery, you'll need to sign in as <strong>${formEmail}</strong>. Or, if you'd like to access it with your current account, you can register and pay again using <strong>${LOGGED_IN_EMAIL}</strong>.`;
-      document.getElementById('payment-first-name').value = document.getElementById('first-name').value;
-      document.getElementById('payment-last-name').value  = document.getElementById('last-name').value;
-      document.getElementById('payment-name-label').style.display  = '';
-      document.getElementById('payment-name-fields').style.display = '';
-      closeModal();
+      closeRegisterOtherModal();
       showScreen('payment');
     });
 
