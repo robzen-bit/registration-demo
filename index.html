@@ -853,13 +853,16 @@
       <h2>Registering for someone else</h2>
       <p class="modal-body">Enter the details for the person you are registering for below.</p>
 
-      <div class="row" style="margin-bottom: 20px;">
+      <div class="row" style="margin-bottom: 10px;">
         <div class="field">
           <input type="text" id="reg-other-first" placeholder="First Name" autocomplete="given-name" />
         </div>
         <div class="field">
           <input type="text" id="reg-other-last" placeholder="Last Name (optional)" autocomplete="family-name" />
         </div>
+      </div>
+      <div class="field" style="margin-bottom: 20px;">
+        <input type="email" id="reg-other-email" placeholder="Email*" autocomplete="email" />
       </div>
 
       <div class="modal-actions">
@@ -1040,6 +1043,7 @@
     function openRegisterOtherModal() {
       document.getElementById('reg-other-first').value = document.getElementById('first-name').value;
       document.getElementById('reg-other-last').value  = document.getElementById('last-name').value;
+      document.getElementById('reg-other-email').value = document.getElementById('email').value;
       registerOtherOverlay.classList.add('open');
     }
 
